@@ -26,6 +26,5 @@ https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
 
           
 
-        </properties>
     </persistence-unit>
 </persistence>

@@ -21,7 +21,7 @@ public class Commune {
     // RELATION
 
     // COMMUNE -> DEPARTEMENT
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_departement")
     private Departement departement;
 

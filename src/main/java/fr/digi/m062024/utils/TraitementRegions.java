@@ -35,6 +35,7 @@ public class TraitementRegions {
 
     }
 
+
     public static Set<Region> getRegion() {
 
         //      On fait une boucle for qu'on initialise à 1 pour skip l'en-tête

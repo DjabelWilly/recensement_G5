@@ -7,83 +7,65 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TraitementDepartements {
 
-
-    //      On définit le chemin du fichier source communes.csv que l'on va utiliser
-    private static Path path = Paths.get("src/main/resources/Departements.csv");
+    private static Path pathDepartements = Paths.get("src/main/resources/Departements.csv");
     private static Path pathCommunes = Paths.get("src/main/resources/Communes.csv");
 
-    //      On lit toutes les lignes du fichier communes.csv que l'on stock dans la liste lignes
-    private static List<String> lignes;
+    private static List<String> lignesDepartements;
     private static List<String> lignesCommunes;
 
+    // On charge les lignes des fichiers
     static {
         try {
-            lignes = Files.readAllLines(path);
+            lignesDepartements = Files.readAllLines(pathDepartements);
             lignesCommunes = Files.readAllLines(pathCommunes);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erreur de lecture des fichiers");
         }
     }
-
-
-    //      On initialise un set de departements à vide
-    private static Set<Departement> departements = new HashSet<Departement>();
-
-    //      On importe les régions
-    private static Set<Region> regions = TraitementRegions.getRegion();
-
-
-    public TraitementDepartements() {
-    }
-
 
     public static Set<Departement> getDepartements() {
 
-        for (int i = 1; i < lignesCommunes.size(); ++i) {
+        Set<Departement> departements = new HashSet<>();
+
+        Map<String, Departement> mapDepartements = new HashMap<>();
+        Map<Integer, Region> mapRegions = new HashMap<>();
+
+
+        for (Region region : TraitementRegions.getRegion()) {
+            mapRegions.put(region.getCode(), region);
+        }
+
+        for (int i = 1; i < lignesDepartements.size(); i++) {
+
+            String[] parts = lignesDepartements.get(i).split(";");
+
+            String code = parts[0];
+            String nom = parts[1];
+
+            mapDepartements.put(code, new Departement(code, nom));
+        }
+
+        for (int i = 1; i < lignesCommunes.size(); i++) {
 
             String[] parts = lignesCommunes.get(i).split(";");
 
-            Integer codeRegion = Integer.valueOf(parts[0]);
+            Integer codeRegion = Integer.parseInt(parts[0]);
+            String codeDepartement = parts[2];
 
+            Departement departement = mapDepartements.get(codeDepartement);
+            Region region = mapRegions.get(codeRegion);
 
-            for (int j = 1; j < lignes.size(); ++j) {
-
-                String[] partsTwo = lignes.get(j).split(";");
-
-                String code = partsTwo[0];
-                String nom = partsTwo[1];
-
-                Departement departement = new Departement(code, nom);
-
-
-                for (Region region : regions) {
-
-                    if (region.getCode().equals(codeRegion)) {
-                        departement.setRegion(region);
-                        System.out.println("Assignation de la région " + region.getNom() + " au département " + departement.getNom());
-                        break;
-                    }
-
-                }
-
-                if (!departements.contains(departement)) {
-                    departements.add(departement);
-                }
-
+            if (departement != null && region != null) {
+                departement.setRegion(region);
+                System.out.println("Département " + departement.getNom() + " associé à la région " + region.getNom());
             }
-
-
         }
+
+        departements.addAll(mapDepartements.values());
         return departements;
     }
-
-
 }
-

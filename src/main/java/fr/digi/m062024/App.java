@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * @Autheurs Willy, Khaled, Maxime
+ */
 public class App {
 
     //  COULEURS
