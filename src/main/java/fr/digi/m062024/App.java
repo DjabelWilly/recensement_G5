@@ -14,6 +14,7 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -60,7 +61,7 @@ public class App {
             em.persist(departement);
         }
 
-        //      On boucle dans le set de communes et pour chaque communes on l'envoi en base de données
+        //      On boucle dans le set de communes et pour chaque commune on l'envoi en base de données
         for (Commune commune : communes) {
             em.persist(commune);
         }
@@ -111,7 +112,62 @@ public class App {
                 case 3:
                     System.out.println("Saisir une region :");
                     input = sc.next();
-                    TypedQuery<Long> popRegQuery = em.createQuery("", Long.class);
+                    TypedQuery<Long> popRegQuery = em.createQuery("SELECT SUM(c.population) FROM Commune c LEFT JOIN c.departement d LEFT JOIN d.region r WHERE r.nom = :region", Long.class);
+                    popRegQuery.setParameter("region", input);
+
+                    try {
+                        Long popReg = popRegQuery.getSingleResult();
+                        System.out.println("Population dans la region : " + popReg + " habitants");
+                    } catch (NoResultException e) {
+                        System.out.println("Aucune région trouvée avec le nom : " + input);
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Saisir un département :");
+                    input = sc.next();
+                    System.out.println("Saisir un nombres de ville :");
+                    Integer num = sc.nextInt();
+                    TypedQuery<Commune> nbsCommuneDepQuery = em.createQuery("SELECT c FROM Commune c LEFT JOIN c.departement d WHERE d.nom = :departement ORDER BY c.population DESC", Commune.class);
+                    nbsCommuneDepQuery.setParameter("departement", input);
+
+                    try {
+                        List<Commune> nbsCommune = nbsCommuneDepQuery.setMaxResults(num).getResultList();
+                        System.out.println(nbsCommune);
+                    } catch (NoResultException e) {
+                        System.out.println("Aucun département trouvée avec le nom : " + input);
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Saisir une région :");
+                    input = sc.next();
+                    System.out.println("Saisir un nombres de ville :");
+                    num = sc.nextInt();
+                    TypedQuery<Commune> nbsCommuneRegQuery = em.createQuery("SELECT c FROM Commune c LEFT JOIN c.departement d LEFT JOIN d.region r WHERE r.nom = :region ORDER BY c.population DESC", Commune.class);
+                    nbsCommuneRegQuery.setParameter("region", input);
+
+                    try {
+                        List<Commune> nbsCommune = nbsCommuneRegQuery.setMaxResults(num).getResultList();
+                        System.out.println(nbsCommune);
+                    } catch (NoResultException e) {
+                        System.out.println("Aucune région trouvée avec le nom : " + input);
+                    }
+                    break;
+
+                case 6:
+                    System.out.println("Saisir un nombres de département :");
+                    num = sc.nextInt();
+                    TypedQuery<Departement> nbsDepQuery = em.createQuery("SELECT d FROM Departement d LEFT JOIN d.communes c LEFT JOIN d.region r GROUP BY d.nom ORDER BY SUM(c.population) DESC", Departement.class);
+
+                    try {
+                        List<Departement> nbsDep = nbsDepQuery.setMaxResults(num).getResultList();
+                        System.out.println(nbsDep);
+                    } catch (NoResultException e) {
+                        System.out.println("Aucun résultat trouvée...");
+                    }
+                    break;
+
             }
 
         } while (selection != 7);

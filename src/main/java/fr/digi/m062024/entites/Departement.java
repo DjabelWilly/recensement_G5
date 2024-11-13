@@ -45,8 +45,6 @@ public class Departement implements Serializable {
         final StringBuilder sb = new StringBuilder("Departement{");
         sb.append("code='").append(code).append('\'');
         sb.append(", nom='").append(nom).append('\'');
-        sb.append(", region=").append(region);
-        sb.append(", communes=").append(communes);
         sb.append('}');
         return sb.toString();
     }
@@ -147,11 +145,12 @@ public class Departement implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Departement that = (Departement) o;
-        return Objects.equals(id, that.id) && Objects.equals(code, that.code) && Objects.equals(nom, that.nom) && Objects.equals(region, that.region) && Objects.equals(communes, that.communes);
+        return Objects.equals(code, that.code) && Objects.equals(nom, that.nom);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, nom, region, communes);
+        return Objects.hash(code, nom);
     }
+
 }

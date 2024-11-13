@@ -54,6 +54,7 @@ public class TraitementDepartements {
 
 
             for (int j = 1; j < lignes.size(); ++j) {
+
                 String[] partsTwo = lignes.get(j).split(";");
 
                 String code = partsTwo[0];
@@ -61,15 +62,21 @@ public class TraitementDepartements {
 
                 Departement departement = new Departement(code, nom);
 
+
                 for (Region region : regions) {
+
                     if (region.getCode().equals(codeRegion)) {
                         departement.setRegion(region);
+                        System.out.println("Assignation de la région " + region.getNom() + " au département " + departement.getNom());
+                        break;
                     }
 
                 }
 
+                if (!departements.contains(departement)) {
+                    departements.add(departement);
+                }
 
-                departements.add(departement);
             }
 
 
