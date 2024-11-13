@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
              version="3.1">
     <persistence-unit name="traitement-fichier">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
+
             <!--        CONNEXION BDD MARIADB-->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3307/recensement"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
@@ -22,5 +24,8 @@
 <!--            <property name="hibernate.format_sql" value="true"/>-->
         </properties>
 
+          
+
+        </properties>
     </persistence-unit>
 </persistence>
