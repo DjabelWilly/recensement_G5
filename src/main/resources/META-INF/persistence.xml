@@ -8,14 +8,23 @@ https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/recensement"/>
-            <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value="Root2024$"/>
-            <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <!--        CONNEXION BDD MARIADB-->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3307/recensement"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value="khaled"/>
+
+            <!--  POUR CREER LES TABLES AUTOMATIQUEMENT           -->
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+
+            <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
+
+            <!-- POUR AFFICHER ET FORMATER LES REQUÊTES SQL -->
+<!--            <property name="hibernate.show_sql" value="true"/>-->
+<!--            <property name="hibernate.format_sql" value="true"/>-->
+        </properties>
+
+          
 
         </properties>
     </persistence-unit>

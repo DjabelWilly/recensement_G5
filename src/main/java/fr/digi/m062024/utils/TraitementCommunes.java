@@ -1,6 +1,7 @@
 package fr.digi.m062024.utils;
 
 import fr.digi.m062024.entites.Commune;
+import fr.digi.m062024.entites.Departement;
 import fr.digi.m062024.entites.Region;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class TraitementCommunes {
 
     //      On initialise un set de communes à vide
     private static Set<Commune> communes = new HashSet<Commune>();
+    private static Set<Departement> departements = TraitementDepartements.getDepartements();
 
     public TraitementCommunes() {
     }
@@ -49,7 +51,16 @@ public class TraitementCommunes {
 
 
 //          On ajoute au Set de communes chacune des communes
-            communes.add(new Commune(nom, codeCommune, codeDepartement, population));
+            Commune commune = new Commune(nom, codeCommune, population);
+
+            for (Departement departement : departements) {
+                if(departement.getCode().equals(codeDepartement)) {
+                    commune.setDepartement(departement);
+                }
+            }
+
+
+            communes.add(commune);
 
 
         }

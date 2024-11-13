@@ -1,11 +1,6 @@
 package fr.digi.m062024.entites;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -20,15 +15,19 @@ public class Commune {
     private String nom;
     @Column(name = "code_commune", length = 10, nullable = false)
     private Integer codeCommune;
-    @Column(name = "code_departement", length = 10, nullable = false)
-    private String codeDepartement;
     @Column(name = "population", nullable = false)
     private Integer population;
 
-    public Commune(String nom, Integer codeCommune, String codeDepartement, Integer population) {
+    // RELATION
+
+    // COMMUNE -> DEPARTEMENT
+    @ManyToOne
+    @JoinColumn(name = "id_departement")
+    private Departement departement;
+
+    public Commune(String nom, Integer codeCommune, Integer population) {
         this.nom = nom;
         this.codeCommune = codeCommune;
-        this.codeDepartement = codeDepartement;
         this.population = population;
     }
 
@@ -42,8 +41,8 @@ public class Commune {
         sb.append("id=").append(id);
         sb.append(", nom='").append(nom).append('\'');
         sb.append(", codeCommune=").append(codeCommune);
-        sb.append(", codeDepartement='").append(codeDepartement).append('\'');
-        sb.append(", population='").append(population).append('\'');
+        sb.append(", population=").append(population);
+        sb.append(", departement=").append(departement);
         sb.append('}');
         return sb.toString();
     }
@@ -103,24 +102,6 @@ public class Commune {
     }
 
     /**
-     * Getter for codeDepartement.
-     *
-     * @return the value of codeDepartement.
-     */
-    public String getCodeDepartement() {
-        return codeDepartement;
-    }
-
-    /**
-     * Setter for codeDepartement.
-     *
-     * @param value the new value for codeDepartement.
-     */
-    public void setCodeDepartement(String value) {
-        this.codeDepartement = value;
-    }
-
-    /**
      * Getter for population.
      *
      * @return the value of population.
@@ -138,16 +119,34 @@ public class Commune {
         this.population = value;
     }
 
+    /**
+     * Getter for departement.
+     *
+     * @return the value of departement.
+     */
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    /**
+     * Setter for departement.
+     *
+     * @param value the new value for departement.
+     */
+    public void setDepartement(Departement value) {
+        this.departement = value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Commune commune = (Commune) o;
-        return Objects.equals(id, commune.id) && Objects.equals(nom, commune.nom) && Objects.equals(codeCommune, commune.codeCommune) && Objects.equals(codeDepartement, commune.codeDepartement) && Objects.equals(population, commune.population);
+        return Objects.equals(id, commune.id) && Objects.equals(nom, commune.nom) && Objects.equals(codeCommune, commune.codeCommune) && Objects.equals(population, commune.population) && Objects.equals(departement, commune.departement);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nom, codeCommune, codeDepartement, population);
+        return Objects.hash(id, nom, codeCommune, population, departement);
     }
 }

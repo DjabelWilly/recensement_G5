@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "regions")
@@ -18,8 +19,11 @@ public class Region implements Serializable {
     @Column(name = "code", length = 10, nullable = false)
     private Integer code;
 
-//    @OneToMany(mappedBy = "region")
-//    private Set<departement> departements;
+    // RELATION
+
+    // REGION -> DEPARTEMENT
+    @OneToMany(mappedBy = "region")
+    private Set<Departement> departements;
 
     public Region(String nom, Integer code) {
         this.nom = nom;
