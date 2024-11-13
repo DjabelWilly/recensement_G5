@@ -2,6 +2,9 @@
 
 L’objectif de ce projet est de mettre en base de données le dernier recensement de population réalisé par l’INSEE pour les quelques 36000 communes de France.
 
+![Diagram](./conception/Diagram-uml.jpg)
+![Diagram](./conception/Recensement_MPD_Digramme.png)
+
 ## Auteur
 
 - [@Khaledik](https://github.com/Khaledik)
