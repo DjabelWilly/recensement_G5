@@ -1,9 +1,12 @@
 # Projet Recensement
 
+L’objectif de ce projet est de mettre en base de données le dernier recensement de population réalisé par l’INSEE pour les quelques 36000 communes de France.
+
 ## Auteur
 
 - [@Khaledik](https://github.com/Khaledik)
 - [@DjabelWilly](https://github.com/DjabelWilly)
+- [@maximehery](https://github.com/maximehery)
 
 
 ## Démarrer
